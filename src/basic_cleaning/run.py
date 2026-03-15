@@ -35,6 +35,10 @@ def go(args):
     # Filter price outliers
     df = df[(df["price"] >= args.min_price) & (df["price"] <= args.max_price)]
 
+    # Filter rows based on latitude and longitude
+    idx = df['longitude'].between(-74.25, -73.50) & df['latitude'].between(40.5, 41.2)
+    df = df[idx].copy()
+
     # Save cleaned dataset
     logger.info("Saving cleaned dataset")
     df.to_csv("clean_sample.csv", index=False)
